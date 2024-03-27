@@ -7,7 +7,7 @@ var players = [];
 
 const roles = {
   doctor: "доктор",
-  commissar: "комессар",
+  commissar: "комиссар",
   lover: "путана",
   maniac: "маньяк",
   master: "ведущий",
@@ -18,7 +18,7 @@ const roles = {
 
 const rolesWithEmoji = {
   doctor: "🌡️доктор",
-  commissar: "🕵️комессар",
+  commissar: "🕵️комиссар",
   lover: "💌путана",
   maniac: "🔪маньяк",
   master: "🎙️ведущий",
@@ -211,7 +211,7 @@ window.addEventListener("load", () => {
   $("body").on("click", ".upper-hud #home", () => {
     document.location.search = "";
   });
-
+x
   $("body").on("click", ".upper-hud #burger", () => {
     $(".burger-menu")[0].dataset.open = $(".burger-menu")[0].dataset.open == "false" ? "true" : "false";
   });
