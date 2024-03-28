@@ -86,6 +86,8 @@ window.addEventListener("load", () => {
   restoreBurgerList();
   
   $(".select-hero-menu").on("click", ".inner > *", function(ev) {
+    if ($(this).hasClass("close")) return;
+    
     let sc = $(ev.delegateTarget).attr("selectedCell");
     let card = $(".card-holder")[0].children.item(sc);
     let index = player_row.findIndex(e=>e.name == card.dataset.player);

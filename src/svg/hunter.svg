@@ -4,7 +4,7 @@
 <defs>
 <radialGradient id="paint0_radial_5_55" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(95.9265 2) rotate(90) scale(262.632 191.613)">
 <stop offset="0.454" stop-color="#64170C"/>
-<stop offset="1" stop-color="#343238" stop-opacity="0"/>
+<stop offset="1" stop-color="#64170C" stop-opacity="0"/>
 </radialGradient>
 </defs>
 </svg>
