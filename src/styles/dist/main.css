@@ -51,26 +51,26 @@ body {
 
 .card[data-mods=khs]::before {
   aspect-ratio: 2/1;
-  background: linear-gradient(90deg, rgb(175, 20, 20) 0%, rgb(175, 20, 20) 30%, rgb(81, 218, 47) 30%, rgb(81, 218, 47) 70%, rgb(203, 136, 20) 70%, rgb(203, 136, 20) 100%);
+  background: linear-gradient(90deg, #af1414 0%, #af1414 30%, #51da2f 30%, #51da2f 70%, #cb8814 70%, #cb8814 100%);
 }
 
 .card[data-mods=kh]::before {
   aspect-ratio: 2/1;
-  background: linear-gradient(90deg, rgb(175, 20, 20) 0%, rgb(175, 20, 20) 50%, rgb(81, 218, 47) 50%, rgb(81, 218, 47) 100%);
+  background: linear-gradient(90deg, #af1414 0%, #af1414 50%, #51da2f 50%, #51da2f 100%);
 }
 
 .card[data-mods=hs]::before {
   aspect-ratio: 2/1;
-  background: linear-gradient(90deg, rgb(81, 218, 47) 0%, rgb(81, 218, 47) 50%, rgb(203, 136, 20) 50%, rgb(203, 136, 20) 100%);
+  background: linear-gradient(90deg, #51da2f 0%, #51da2f 50%, #cb8814 50%, #cb8814 100%);
 }
 
 .card[data-mods=ks]::before {
   aspect-ratio: 2/1;
-  background: linear-gradient(90deg, rgb(175, 20, 20) 0%, rgb(175, 20, 20) 50%, rgb(203, 136, 20) 50%, rgb(203, 136, 20) 100%);
+  background: linear-gradient(90deg, #af1414 0%, #af1414 50%, #cb8814 50%, #cb8814 100%);
 }
 
 .card[data-mods=k]::before {
-  background-color: rgb(175, 20, 20);
+  background-color: #af1414;
 }
 
 .card[data-mods=h]::before {
@@ -78,7 +78,7 @@ body {
 }
 
 .card[data-mods=s]::before {
-  background-color: rgb(203, 136, 20);
+  background-color: #cb8814;
 }
 
 .card .role-name {
@@ -245,7 +245,7 @@ body {
 
 .select-hero-menu .inner *:active {
   /* transition: scale(80%); */
-  background-color: hsl(210, 7%, 13%);
+  background-color: #1f2123;
 }
 
 .style-fcc {
@@ -279,7 +279,7 @@ body {
   height: 100%;
   width: 100%;
   position: absolute;
-  background-color: rgba(28, 28, 32, 0.7882352941);
+  background-color: #1c1c20c9;
   z-index: 100;
   transition: 0.4s;
 }
@@ -338,4 +338,4 @@ body {
   justify-content: space-between;
   flex-wrap: nowrap;
   gap: 1rem;
-}/*# sourceMappingURL=main.css.map */
+}

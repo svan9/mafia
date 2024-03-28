@@ -92,11 +92,17 @@ function generateCard(rolename, player) {
 window.addEventListener("load", () => {
   player_row = parsePlayerRow(getMeta("player_row")) ?? player_row;
   player_row.forEach(e=>{(e??{}).mods = new Set(e?.mods)});
-    
-  player_row.forEach(e => {
-    if (e==null) return;
-    $(".card-holder")[0].innerHTML += generateCard(e.role, e.name);
-  });
+
+  restoreCards();
+
+  function restoreCards() {
+    $(".card-holder")[0].innerHTML = "";
+    player_row.forEach(e => {
+      if (e==null) return;
+      $(".card-holder")[0].innerHTML += generateCard(e.role, e.name);
+    });
+  
+  }
 
   for (let key in roles) {
     $(".select-hero-menu .inner")[0].innerHTML += /*html*/`<div id="${key}" class="style-fcc"><span>${rolesWithEmoji[key]+""}</span></div>`
@@ -122,7 +128,7 @@ window.addEventListener("load", () => {
     card.dataset.role = `${roles[rolename] == void 0 ? "none": rolename}`
 
     setTimeout(() => {
-      $(ev.delegateTarget).attr("hidden", "")
+      $(ev.delegateTarget).attr("hidden", "true")
     }, 200);
   });
 
@@ -239,6 +245,15 @@ window.addEventListener("load", () => {
   
   $("body").on("click", ".upper-hud #burger", () => {
     $(".burger-menu")[0].dataset.open = $(".burger-menu")[0].dataset.open == "false" ? "true" : "false";
+  });
+  
+  $("body").on("click", ".upper-hud #resert", () => {
+    player_row.forEach(e=>{
+      e.mods.clear();
+      e.role = "none";
+    });
+
+    restoreCards();
   });
 
   setInterval(() => {
