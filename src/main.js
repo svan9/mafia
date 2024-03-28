@@ -211,7 +211,7 @@ window.addEventListener("load", () => {
   $("body").on("click", ".upper-hud #home", () => {
     document.location.search = "";
   });
-x
+  
   $("body").on("click", ".upper-hud #burger", () => {
     $(".burger-menu")[0].dataset.open = $(".burger-menu")[0].dataset.open == "false" ? "true" : "false";
   });
