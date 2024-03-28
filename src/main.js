@@ -34,6 +34,29 @@ var player_row = [
   // { name: "олег", role: "ga", mods: new Set() },
 ];
 
+function stringifyPlayerRow(player_row) {
+  var str = [];
+  for (let player of player_row) {
+    str.push([player.name, player.role, [...player.mods].join("$")].join("/"));
+  }
+  return str.join("|");
+}
+
+function parsePlayerRow(string) {
+  if (string == void 0) return void 0;
+  return (
+    string
+      .split("|")
+      .map(e=>e.split("/"))
+      .map(
+        ([name, role, mods]) => 
+          ({
+            name, 
+            role, 
+            mods: (new Set(mods?.split("$")?.filter(e=>e!="")) ?? new Set())}))
+  );
+}
+
 function genMods(mods) {
   return (
     (mods.has("kill") ? "k" : "") +
@@ -65,11 +88,11 @@ function generateCard(rolename, player) {
 `;
 }
 
-window.addEventListener("load", () => {
-  player_row = getMeta("player_row") ?? player_row;
-  
-  player_row.forEach(e=>{(e??{}).mods = new Set(e?.mods)})
 
+window.addEventListener("load", () => {
+  player_row = parsePlayerRow(getMeta("player_row")) ?? player_row;
+  player_row.forEach(e=>{(e??{}).mods = new Set(e?.mods)});
+    
   player_row.forEach(e => {
     if (e==null) return;
     $(".card-holder")[0].innerHTML += generateCard(e.role, e.name);
@@ -158,8 +181,8 @@ window.addEventListener("load", () => {
     $(".select-hero-menu").attr("style", "--_ycell: " + (parseInt(index/2)+1));
   }
 
-  $(".card").on("click", ".kiss", function(ev) {
-    let player = ev.delegateTarget.dataset.player;
+  $(".card-holder").on("click", ".card .kiss", function(ev) {
+    let player = ev.target.parentElement.parentElement.dataset.player;
     player_row.forEach(e => {
       if (e.name == player) {
         e.mods.has("kiss") 
@@ -168,11 +191,11 @@ window.addEventListener("load", () => {
       }
     });
 
-    cardUpdateMods(ev.delegateTarget, player);
+    cardUpdateMods(ev.target.parentElement.parentElement, player);
   });
 
-  $(".card").on("click", ".heal", function(ev) {
-    let player = ev.delegateTarget.dataset.player;
+  $(".card-holder").on("click", ".card .heal", function(ev) {
+    let player = ev.target.parentElement.parentElement.dataset.player;
     player_row.forEach(e => {
       if (e.name == player) {
         e.mods.has("heal") 
@@ -180,12 +203,12 @@ window.addEventListener("load", () => {
           : e.mods.add("heal");
       }
     });
-    cardUpdateMods(ev.delegateTarget, player);
+    cardUpdateMods(ev.target.parentElement.parentElement, player);
 
   });
 
-  $(".card").on("click", ".kill", function(ev) {
-    let player = ev.delegateTarget.dataset.player;
+  $(".card-holder").on("click", ".card .kill", function(ev) {
+    let player = ev.target.parentElement.parentElement.dataset.player;
     player_row.forEach(e => {
       if (e.name == player) {
         e.mods.has("kill") 
@@ -193,7 +216,7 @@ window.addEventListener("load", () => {
           : e.mods.add("kill");
       }
     });
-    cardUpdateMods(ev.delegateTarget, player);
+    cardUpdateMods(ev.target.parentElement.parentElement, player);
   });
 
   /**
@@ -219,7 +242,7 @@ window.addEventListener("load", () => {
   });
 
   setInterval(() => {
-    addMeta("player_row", player_row);
+    addMeta("player_row", stringifyPlayerRow(player_row));
   }, 500);
 
 
