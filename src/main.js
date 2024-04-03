@@ -180,13 +180,14 @@ window.addEventListener("load", () => {
    * @param {JQuery.MouseUpEvent<HTMLElement, undefined, any, any>} ev
    */
   function onCardHolderHold(ev) {
-    let b1 = ev.currentTarget.getBoundingClientRect();
+    let b1 = $(ev.currentTarget).offset();
+    let b2 = ev.currentTarget.getBoundingClientRect();
     let w2 = parseInt($(".select-hero-menu").css("width"));
     let pad = parseInt($(ev.currentTarget).css("padding"));
 
     $(".select-hero-menu").css({
-        "--_offset-x": /*css*/`${b1.x - (Math.abs(b1.width-w2)/2)}px`,
-        "--_offset-y": /*css*/`${b1.y + b1.height + pad}px`
+        "--_offset-x": /*css*/`${b1.left - (Math.abs(b2.width-w2)/2)}px`,
+        "--_offset-y": /*css*/`${b1.top + b2.height + pad}px`
       });
 
 
@@ -344,6 +345,7 @@ window.addEventListener("load", () => {
     if (!is_checker) return;
 
     var touch = ev.targetTouches[0];
+
     $(this).css({
       position: "absolute",
       top:  `${touch.pageY - c_offset.x}px`,
