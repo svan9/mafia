@@ -127,9 +127,9 @@ window.addEventListener("load", () => {
     card.querySelector(".role-name").innerHTML = roles[rolename] ?? roles.none;
     card.dataset.role = `${roles[rolename] == void 0 ? "none": rolename}`
 
-    setTimeout(() => {
-      $(ev.delegateTarget).attr("hidden", "true")
-    }, 200);
+    $(ev.delegateTarget).attr("hidden", "true")
+    // setTimeout(() => {
+    // }, 200);
   });
 
   for(let card of $(".card-holder").children(".card")) {
@@ -169,7 +169,7 @@ window.addEventListener("load", () => {
     }, 1000);
 
     if (clicks == 2) {
-      onCardHolderHold.call(this, ev.delegateTarget);
+      onCardHolderHold.call(this, ev);
       clicks = 0;
       last_this = null;
     }
@@ -177,21 +177,30 @@ window.addEventListener("load", () => {
   
   /**
    * 
-   * @param {HTMLElement} parent 
+   * @param {JQuery.MouseUpEvent<HTMLElement, undefined, any, any>} ev
    */
-  function onCardHolderHold(parent) {
-    let index = [...parent.children].indexOf(this);
-    $(".select-hero-menu")[0].dataset.right = !(index % 2 == 0)+"";
+  function onCardHolderHold(ev) {
+    let b1 = ev.currentTarget.getBoundingClientRect();
+    let w2 = parseInt($(".select-hero-menu").css("width"));
+    let pad = parseInt($(ev.currentTarget).css("padding"));
+
+    $(".select-hero-menu").css({
+        "--_offset-x": /*css*/`${b1.x - (Math.abs(b1.width-w2)/2)}px`,
+        "--_offset-y": /*css*/`${b1.y + b1.height + pad}px`
+      });
+
+
+    //# release
     $(".select-hero-menu").removeAttr("hidden");
-    $(".select-hero-menu").attr("selectedCell", index);
-    $(".select-hero-menu").attr("style", "--_ycell: " + (parseInt(index/2)+1));
+    $(".select-hero-menu").attr("selectedCell", [...ev.delegateTarget.children].indexOf(this));
   }
+
 
   $(".card-holder").on("click", ".card .kiss", function(ev) {
     let player = ev.target.parentElement.parentElement.dataset.player;
     player_row.forEach(e => {
       if (e.name == player) {
-        e.mods.has("kiss") 
+        e.mods.has("kiss")
           ? (e.mods.delete("kiss"))
           : e.mods.add("kiss");
       }
@@ -307,5 +316,89 @@ window.addEventListener("load", () => {
         player_row.push({name: name, role: "none", mods: new Set()});
       });
   }
+
+  var is_checker = false;
+  var c_timeout = null;
+
+  $(".upper-hud #checker").draggable();
+
+  var c_offset = {
+    x: 0,
+    y: 0
+  } 
+  
+  $(".upper-hud #checker").on("dragstart touchstart", function(ev) {
+    is_checker = true;
+    if (ev.type == "touchstart") {
+      var touch = ev.targetTouches[0];
+      var bounds = this.getBoundingClientRect();
+
+      c_offset = {
+        x: touch.pageY - bounds.top ,
+        y: touch.pageX - bounds.left 
+      }
+    }
+  });
+  
+  $(".upper-hud #checker").on("touchmove", function(ev) {
+    if (!is_checker) return;
+
+    var touch = ev.targetTouches[0];
+    $(this).css({
+      position: "absolute",
+      top:  `${touch.pageY - c_offset.x}px`,
+      left: `${touch.pageX - c_offset.x}px`,
+    });
+
+  });
+  
+  $(".upper-hud #checker").on("dragend touchend", function(ev) {
+    clearTimeout(c_timeout);
+
+    c_timeout = setTimeout(() => {
+      is_checker = false;
+      $(this).css({
+        position: "",
+      });
+    }, 10);
+  });
+
+  $(".card-holder .card").droppable({
+    drop: function( ev, ui ) {
+      if (ui.draggable[0].id != "checker") return;
+      if (ev.target.dataset.role == "mafia") {
+        $(ui.draggable[0]).html("🎉");
+          
+        $(ui.draggable[0]).css({
+          animation: "rotatef 1s infinite ease-out",
+        });
+
+        setTimeout(() => {
+          $(ui.draggable[0]).css({
+            animation: "",
+          });
+          $(ui.draggable[0]).html("⚜️");
+        }, 800);
+
+      } else {
+        $(ui.draggable[0]).css({
+          animation: "no-no-no 1s linear",
+        });
+        $(ui.draggable[0]).html("🤟");
+        
+        setTimeout(() => {
+          $(ui.draggable[0]).css({
+            animation: "",
+          });
+          $(ui.draggable[0]).html("⚜️");
+        }, 800);
+      }
+    }
+  });
+
+  // $(".card-holder").on("mouseover drop", ".card", function(ev) {
+  //   console.log(ev);
+  //   if (!is_checker) return;
+  // });
 
 });

@@ -1,14 +1,17 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap");
 body {
   background-color: #1c1c20;
+  margin: 0px;
+  padding: 0px;
 }
 
 .card-holder {
   display: flex;
-  margin: 2rem 1rem;
+  margin: 2rem 0px;
   gap: 0.5rem;
   flex-direction: row;
   flex-wrap: wrap;
+  justify-content: center;
 }
 
 .card {
@@ -197,22 +200,13 @@ body {
   border-radius: 0.3rem;
   position: absolute;
   background: #151719;
-  top: calc(226px * var(--_ycell, 1) + 100px);
+  top: var(--_offset-y, 0px);
+  left: var(--_offset-x, 0px);
   padding: 0.5rem;
   box-shadow: 0px 0px 20px 1px #151719;
   transition: 0.3s;
   opacity: 100%;
   z-index: 90;
-  left: 0%;
-}
-
-.select-hero-menu[hidden=true] {
-  opacity: 0%;
-  z-index: -1000;
-}
-
-.select-hero-menu[data-right=true] {
-  left: 40%;
 }
 
 .select-hero-menu .inner {
@@ -267,6 +261,13 @@ body {
 
 .upper-hud *:active {
   opacity: 50%;
+}
+
+.upper-hud #checker {
+  -moz-window-dragging: drag;
+  -webkit-user-drag: element;
+  user-select: none;
+  cursor: pointer;
 }
 
 .emoji:active {
@@ -338,4 +339,51 @@ body {
   justify-content: space-between;
   flex-wrap: nowrap;
   gap: 1rem;
+}
+
+@keyframes no-no-no {
+  0% {
+    transform-origin: 50% 50%;
+    transform: rotate(0deg);
+  }
+  10% {
+    transform: rotate(90deg);
+  }
+  20% {
+    transform: rotate(0deg);
+  }
+  30% {
+    transform: rotate(-90deg);
+  }
+  40% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(90deg);
+  }
+  60% {
+    transform: rotate(0deg);
+  }
+  70% {
+    transform: rotate(-90deg);
+  }
+  80% {
+    transform: rotate(0deg);
+  }
+  90% {
+    transform: rotate(90deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+@keyframes rotatef {
+  from {
+    transform-origin: 50% 50%;
+    transform: rotate(0deg);
+  }
+  to {
+    transform-origin: 50% 50%;
+    transform: rotate(720deg);
+  }
 }/*# sourceMappingURL=main.css.map */
